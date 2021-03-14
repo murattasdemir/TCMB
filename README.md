@@ -72,3 +72,5 @@ veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2021", bitisTarih
 # 2 2021-2 7.0723650000000005
 # 3 2021-3  7.466490909090909
 ```
+
+Detaylı bilgi: http://ucsigma.com/r/rda-yeni-bir-paket-tcmb/
