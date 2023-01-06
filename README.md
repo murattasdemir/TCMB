@@ -2,6 +2,9 @@
 TCMB
 ====
 
+Bu kod Uraz Akgül (urazakgul) tarafından yazılmıştır. Kendisinin kamuya açık olan github deposundan fork edilmiştir. Fakat şu anda böyle bir depo yok veya kamuya açık değil. 
+
+
 TCMB paketi EVDS’den verileri cekmenizi, bu verileri farkli format
 secenekleri ile kaydetmenizi ve tek seri uzerinden interaktif bir
 sekilde gorsellestirmenizi saglar.
