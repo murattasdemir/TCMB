@@ -131,17 +131,7 @@ verigruplari <- function(kategoriKodu = NULL, hepsi = FALSE){
     url <- paste0("https://evds2.tcmb.gov.tr/service/evds/datagroups/key=",anahtarim,"&mode=0&type=json")
     verigrubu <<- fromJSON(url) %>%
       as.data.frame() %>%
-      filter(if(hepsi == FALSE & !is.null(kategoriKodu)) CATEGORY_ID %in% kategoriKodu else CATEGORY_ID == CATEGORY_ID) %>%
-      select(CATEGORY_ID,DATAGROUP_CODE,DATAGROUP_NAME,FREQUENCY_STR,NOTE,START_DATE,END_DATE) %>%
-      rename(
-        "Kategori_Kodu" = "CATEGORY_ID",
-        "VeriGrubu_Kodu" = "DATAGROUP_CODE",
-        "VeriGrubu_Adi" = "DATAGROUP_NAME",
-        "Metinsel_Frekans" = "FREQUENCY_STR",
-        "Not" = "NOTE",
-        "Baslangic_Tarihi" = "START_DATE",
-        "Bitis_Tarihi" = "END_DATE"
-      )
+      filter(if(hepsi == FALSE & !is.null(kategoriKodu)) CATEGORY_ID %in% kategoriKodu else CATEGORY_ID == CATEGORY_ID)
   } else {
 
     stop("Lutfen TCMB'den API anahtarinizi alin. Detayli bilgi icin yardim() fonksiyonunu calistirin.")
@@ -165,17 +155,7 @@ seriler <- function(verigrupKodu){
     url <- paste0("https://evds2.tcmb.gov.tr/service/evds/serieList/key=",anahtarim,"&type=json&code=",verigrupKodu)
     seri <<- fromJSON(url) %>%
       as.data.frame() %>%
-      select(SERIE_CODE,DATAGROUP_CODE,SERIE_NAME,FREQUENCY_STR,DEFAULT_AGG_METHOD_STR,DEFAULT_AGG_METHOD,START_DATE,END_DATE) %>%
-      rename(
-        "Seri_Kodu" = SERIE_CODE,
-        "VeriGrubu_Kodu" = DATAGROUP_CODE,
-        "Seri_Adi" = SERIE_NAME,
-        "Metinsel_Frekans" = FREQUENCY_STR,
-        "Varsayilan_Gozlem_Metodu" = DEFAULT_AGG_METHOD_STR,
-        "Varsayilan_Gozlem_Metodu_Kisa_Kodu" = DEFAULT_AGG_METHOD,
-        "Baslangic_Tarihi" = START_DATE,
-        "Bitis_Tarihi" = END_DATE
-      )
+      select(SERIE_CODE,DATAGROUP_CODE,SERIE_NAME,FREQUENCY_STR,DEFAULT_AGG_METHOD_STR,DEFAULT_AGG_METHOD,START_DATE,END_DATE)
   } else {
 
     stop("Lutfen TCMB'den API anahtarinizi alin. Detayli bilgi icin yardim() fonksiyonunu calistirin.")

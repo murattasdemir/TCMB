@@ -2,7 +2,9 @@
 TCMB
 ====
 
-Bu kod Uraz Akgül (urazakgul) tarafından yazılmıştır. Kendisinin kamuya açık olan github deposundan fork edilmiştir. Fakat şu anda böyle bir depo yok veya kamuya açık değil. 
+Bu kodun orjinali Uraz Akgül (urazakgul) tarafından yazılmıştır. Kendisinin kamuya açık olan github deposundan fork edilmiştir. Fakat şu anda böyle bir depo yok veya kamuya açık değil. 
+
+Orjinal kod hata verdiği için düzeltmeler yapılmıştır.
 
 
 TCMB paketi EVDS’den verileri cekmenizi, bu verileri farkli format
@@ -76,4 +78,3 @@ veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2021", bitisTarih
 # 3 2021-3  7.466490909090909
 ```
 
-Detaylı bilgi: http://ucsigma.com/r/rda-yeni-bir-paket-tcmb/
