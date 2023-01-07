@@ -2,11 +2,11 @@
 % Please edit documentation in R/funcs.R
 \name{kategoriler}
 \alias{kategoriler}
-\title{Kategorileri Tanima}
+\title{Kategorileri Tanıma}
 \usage{
 kategoriler()
 }
 \description{
-Piyasa Verileri, Kurlar, Faiz Istatistikleri gibi kategorileri icermektedir.
-Ilgilenilen kategori/kategoriler belirlendikten sonra verigruplari() fonksiyonunda kullanilacaktir.
+Piyasa Verileri, Kurlar, Faiz İstatistikleri gibi kategorileri içermektedir.
+İlgilenilen kategori/kategoriler belirlendikten sonra \code{verigruplari()} fonksiyonunda kullanılacaktır.
 }

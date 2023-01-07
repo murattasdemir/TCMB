@@ -2,14 +2,15 @@
 % Please edit documentation in R/funcs.R
 \name{parametreler}
 \alias{parametreler}
-\title{Gozlem, Formul ve Frekans Parametrelerini Tanima}
+\title{Gözlem, Formül ve Frekans Parametrelerini Tanıma}
 \usage{
 parametreler()
 }
 \description{
-Veriyi/verileri cekmeden once filtrelemeyi saglarlar.
-Kullanimi zorunlu degildir.
-Belirtilmedigi zaman sistem varsayilani getirecektir.
-Bu fonksiyon sadece tanitim amaclidir.
-veriler() fonksiyonunda kullanilacaktir.
+Veriyi/verileri çekmeden önce filtrelemeyi sağlarlar.
+Kullanımı zorunlu değildir.
+Belirtilmediği zaman sistem varsayılanı getirecektir.
+Bu fonksiyon sadece tanıtım amaçlıdır.
+\code{veriler()} fonksiyonunda kullanılacaktır.
+Bu fonksiyon üç adet veri çerçevesi üretir: \code{gozlem}, \code{formul}, \code{frekans}.
 }

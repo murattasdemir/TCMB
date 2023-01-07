@@ -1,40 +1,43 @@
 #' @export
-#' @title API Anahtarini Tanitma
-#' @description TCMB/EVDS'den alinan API anahtarini tanimlamaya yarayan fonksiyondur.
-#' Anahtar olmadan herhangi bir veri cekme islemi gerceklestirilemez.
-#' Yardim icin yardim() fonksiyonu calistirilabilir.
-#' @param api_anahtar API anahtari.
+#' @title API Anahtarını Tanıtma
+#' @description TCMB/EVDS'den alınan API anahtarını tanımlamaya yarayan fonksiyondur.
+#' Anahtar olmadan herhangi bir veri çekme işlemi gerçekleştirilemez.
+#' Yardim için `yardim()` fonksiyonu çalıştırılabilir.
+#' @param api_anahtar API anahtarı.
 #' @examples
-#' \dontrun{anahtar(api_anahtar = "api_anahtar")}
+#' \dontrun{
+#' anahtar(api_anahtar = "api_anahtar")
+#' }
 anahtar <- function(api_anahtar){
 
   Sys.setenv(myKey = api_anahtar)
-  anahtarim <<- Sys.getenv("myKey")
-
+  anahtarim <- Sys.getenv("myKey")
+  assign('anahtarim', anahtarim, envir = .GlobalEnv)
 }
 
 #' @export
-#' @title API Anahtarinin Nasil Alinacagi Konusunda Yardim
-#' @description Adim adim API anahtarinin nasil alinacagini gosteren fonksiyondur.
-#' Aciklamada bulunan url:
+#' @title API Anahtarının Nasıl Alınacağı Konusunda Yardım
+#' @description Adım adım API anahtarının nasıl alınacağını gösteren fonksiyondur.
+#' Açıklamada bulunan url:
 #' \url{https://evds2.tcmb.gov.tr/index.php?/evds/login}
 yardim <- function(){
   print("https://evds2.tcmb.gov.tr/index.php?/evds/login adresine gidin.", quote = F)
-  print("Uye ekraninda giris yaptiktan sonra Kullanici ismine tiklayip gelen menudeki Profil secenegine tiklayin.", quote = F)
-  print("Gelen ekrandan API Anahtari dugmesine tiklayarak ihtiyaciniz olan degere ulasabilirsiniz.", quote = F)
-  print("Paketi cagirdiktan sonra anahtar() fonksiyonu ile anahtarinizi tanitin.", quote = F)
+  print("Üye ekranında giriş yaptıktan sonra Kullanıcı ismine tıklayıp gelen menüdeki Profil seçeneğine tıklayın.", quote = F)
+  print("Gelen ekrandan API Anahtarı dügmesine tıklayarak ihtiyacınız olan değere ulaşabilirsiniz.", quote = F)
+  print("Paketi çağırdıktan sonra anahtar() fonksiyonu ile anahtarınızı tanıtın.", quote = F)
 }
 
 #' @export
-#' @title Gozlem, Formul ve Frekans Parametrelerini Tanima
-#' @description Veriyi/verileri cekmeden once filtrelemeyi saglarlar.
-#' Kullanimi zorunlu degildir.
-#' Belirtilmedigi zaman sistem varsayilani getirecektir.
-#' Bu fonksiyon sadece tanitim amaclidir.
-#' veriler() fonksiyonunda kullanilacaktir.
+#' @title Gözlem, Formül ve Frekans Parametrelerini Tanıma
+#' @description Veriyi/verileri çekmeden önce filtrelemeyi sağlarlar.
+#' Kullanımı zorunlu değildir.
+#' Belirtilmediği zaman sistem varsayılanı getirecektir.
+#' Bu fonksiyon sadece tanıtım amaçlıdır.
+#' `veriler()` fonksiyonunda kullanılacaktır.
+#' Bu fonksiyon üç adet veri çerçevesi üretir: `gozlem`, `formul`, `frekans`.
 parametreler <- function(){
 
-  gozlem <<- data.frame(
+  gozlem <- data.frame(
     "Tip" = c("Ortalama",
               "En Dusuk",
               "En Yuksek",
@@ -49,7 +52,7 @@ parametreler <- function(){
                    "sum")
   )
 
-  formul <<- data.frame(
+  formul <- data.frame(
     "Tip" = c("Duzey",
               "Yuzde Degisim",
               "Fark",
@@ -70,7 +73,7 @@ parametreler <- function(){
                    "8")
   )
 
-  frekans <<- data.frame(
+  frekans <- data.frame(
     "Tip" = c("Gunluk",
               "Isgunu",
               "Haftalik",
@@ -88,23 +91,27 @@ parametreler <- function(){
                    "7",
                    "8")
   )
-
+  #Assign to global variables
+  assign('gozlem', gozlem, envir = .GlobalEnv)
+  assign('frekans', frekans, envir = .GlobalEnv)
+  assign('formul', formul, envir = .GlobalEnv)
 }
 
 #' @export
-#' @title Kategorileri Tanima
-#' @description Piyasa Verileri, Kurlar, Faiz Istatistikleri gibi kategorileri icermektedir.
-#' Ilgilenilen kategori/kategoriler belirlendikten sonra verigruplari() fonksiyonunda kullanilacaktir.
+#' @title Kategorileri Tanıma
+#' @description Piyasa Verileri, Kurlar, Faiz İstatistikleri gibi kategorileri içermektedir.
+#' İlgilenilen kategori/kategoriler belirlendikten sonra `verigruplari()` fonksiyonunda kullanılacaktır.
 #' @importFrom dplyr select rename %>%
 #' @importFrom jsonlite fromJSON
 kategoriler <- function(){
 
   if(exists("anahtarim")){
     url <- paste0("https://evds2.tcmb.gov.tr/service/evds/categories/key=",anahtarim,"&type=json")
-    kategori <<- fromJSON(url) %>%
+    kategori <- fromJSON(url) %>%
       as.data.frame() %>%
       select(CATEGORY_ID,TOPIC_TITLE_TR) %>%
       rename("Kategori_Kodu" = "CATEGORY_ID", "Konu_Basligi"="TOPIC_TITLE_TR")
+    assign('kategoriler', kategori, envir = .GlobalEnv)
   } else {
 
     stop("Lutfen TCMB'den API anahtarinizi alin. Detayli bilgi icin yardim() fonksiyonunu calistirin.")
@@ -114,24 +121,27 @@ kategoriler <- function(){
 }
 
 #' @export
-#' @title Veri Gruplarini Tanima
-#' @description Doviz Kurlari, Efektif Kurlar gibi veri gruplarini icermektedir.
-#' Ilgilenilen veri grubu/gruplari secildikten sonra seriler() fonksiyonunda kullanilacaktir.
-#' @param kategoriKodu Istenen kategorinin/kategorilerin kodu. Deger girilecekse hepsi parametresi FALSE birakilmalidir. Birden fazla secilmek istenirse c("","",...) seklinde girilmelidir.
-#' @param hepsi Varsayilani FALSE'tur. Eger tum veri gruplari istenirse TRUE yapilmalidir. Bu durumda kategoriKodu parametresine deger girilmemelidir.
+#' @title Veri Gruplarını Tanıma
+#' @description Döviz Kurları, Dış Ticaret gibi veri gruplarını içermektedir.
+#' İlgilenilen veri grubu/grupları seçildikten sonra `seriler()` fonksiyonunda kullanılacaktır.
+#' @param kategoriKodu İstenen kategorinin/kategorilerin kodu. Değer girilecekse hepsi parametresi FALSE bırakılmalıdır. Birden fazla seçilmek istenirse `c("", "", ...)` şeklinde girilmelidir.
+#' @param hepsi Varsayılanı FALSE'tur. Eğer tüm veri grupları istenirse TRUE yapılmalıdır. Bu durumda kategoriKodu parametresine değer girilmemelidir.
 #' @examples
-#' \dontrun{verigruplari(kategoriKodu = 2)}
-#' \dontrun{verigruplari(kategoriKodu = c(2,14))}
-#' \dontrun{verigruplari(hepsi = TRUE)}
+#' \dontrun{
+#' verigruplari(kategoriKodu = 2)
+#' verigruplari(kategoriKodu = c(2,14))
+#' verigruplari(hepsi = TRUE)
+#' }
 #' @importFrom dplyr select rename filter %>%
 #' @importFrom jsonlite fromJSON
 verigruplari <- function(kategoriKodu = NULL, hepsi = FALSE){
 
   if(exists("anahtarim")){
     url <- paste0("https://evds2.tcmb.gov.tr/service/evds/datagroups/key=",anahtarim,"&mode=0&type=json")
-    verigrubu <<- fromJSON(url) %>%
+    verigrubu <- fromJSON(url) %>%
       as.data.frame() %>%
       filter(if(hepsi == FALSE & !is.null(kategoriKodu)) CATEGORY_ID %in% kategoriKodu else CATEGORY_ID == CATEGORY_ID)
+    assign('verigruplari', verigrubu, envir = .GlobalEnv)
   } else {
 
     stop("Lutfen TCMB'den API anahtarinizi alin. Detayli bilgi icin yardim() fonksiyonunu calistirin.")
@@ -146,16 +156,19 @@ verigruplari <- function(kategoriKodu = NULL, hepsi = FALSE){
 #' Ilgilenilen seri/seriler secildikten sonra veriler() fonksiyonunda kullanilacaktir.
 #' @param verigrupKodu Istenen veri grubunun kodu.
 #' @examples
-#' \dontrun{seriler(verigrupKodu = "bie_dkdovytl")}
+#' \dontrun{
+#' seriler(verigrupKodu = "bie_dkdovytl")
+#' }
 #' @importFrom dplyr select rename %>%
 #' @importFrom jsonlite fromJSON
 seriler <- function(verigrupKodu){
 
   if(exists("anahtarim")){
     url <- paste0("https://evds2.tcmb.gov.tr/service/evds/serieList/key=",anahtarim,"&type=json&code=",verigrupKodu)
-    seri <<- fromJSON(url) %>%
+    seri <- fromJSON(url) %>%
       as.data.frame() %>%
       select(SERIE_CODE,DATAGROUP_CODE,SERIE_NAME,FREQUENCY_STR,DEFAULT_AGG_METHOD_STR,DEFAULT_AGG_METHOD,START_DATE,END_DATE)
+    assign('seriler', seri, envir = .GlobalEnv)
   } else {
 
     stop("Lutfen TCMB'den API anahtarinizi alin. Detayli bilgi icin yardim() fonksiyonunu calistirin.")
@@ -165,34 +178,43 @@ seriler <- function(verigrupKodu){
 }
 
 #' @export
-#' @title Verileri Cekme
-#' @description Istenen verinin/verilerin seri kodunun/kodlarinin tanimlanacagi fonksiyondur.
+#' @title Verileri Çekme
+#' @description İstenen verinin/verilerin seri kodunun/kodlarının tanımlanacağı fonksiyondur.
 #' @param seriKodu Veri/verilerin seri kodu.
-#' Birden fazla kod girmek icin c("","",...) seklinde yazilmalidir.
-#' @param baslangicTarihi gg-aa-yyyy formatinda girilmelidir.
+#' Birden fazla kod girmek için `c("", "", ...)` seklinde yazılmalıdır.
+#' @param baslangicTarihi **gg-aa-yyyy** formatinda girilmelidir.
 #' @param bitisTarihi Opsiyonel.
-#' gg-aa-yyyy formatinda girilmelidir.
-#' Girilmezse son tarihi dikkate alacaktir.
+#' **gg-aa-yyyy** formatında girilmelidir.
+#' Girilmezse son tarihi dikkate alacaktır.
 #' @param gozlemParametresi Opsiyonel.
-#' Detay icin parametreler() fonksiyonu calistirilabilir.
-#' Birden fazla seri kodu istenirse gozlem parametreleri her biri icin c("","",...) seklinde tanitilmalidir.
-#' Birden fazla seri kodu girilmis ve tek bir parametre yazilmis ise digerleri de ayni sekilde gelecektir.
-#' Girilmedigi zaman sistem ilgili seri icin orijinal gozlemin parametresini uygulayacaktir.
+#' Detay için `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodu istenirse gözlem parametreleri her biri için `c("", "", ...)` seklinde tanıtılmalıdır.
+#' Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de ayni sekilde gelecektir.
+#' Girilmediği zaman sistem ilgili seri için orijinal gözlemin parametresini uygulayacaktır.
 #' @param formulParametresi Opsiyonel.
-#' Detay icin parametreler() fonksiyonu calistirilabilir.
-#' Birden fazla seri kodu istenirse formul parametreleri her biri icin c("","",...) seklinde tanitilmalidir.
-#' Birden fazla seri kodu girilmis ve tek bir parametre yazilmis ise digerleri de ayni sekilde gelecektir.
-#' Girilmedigi zaman sistem ilgili seri icin duzey parametresini uygulayacaktir.
+#' Detay icin `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodu istenirse formül parametreleri her biri için `c("", "", ...)` seklinde tanıtılmalıdır.
+#' Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de aynı şekilde gelecektir.
+#' Girilmediği zaman sistem ilgili seri için düzey parametresini uygulayacaktır.
 #' @param sayisalFrekans Opsiyonel.
-#' Detay icin parametreler() fonksiyonu calistirilabilir.
-#' Birden fazla seri kodunda tek bir ortak deger olmalidir.
-#' Girilmedigi zaman sistem serilerin ortak frekansini alacaktir.
+#' Detay için `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodunda tek bir ortak değer olmalıdır.
+#' Girilmediği zaman sistem serilerin ortak frekansını alacaktır.
 #' @examples
-#' \dontrun{veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020")}
-#' \dontrun{veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1, sayisalFrekans = 5)}
-#' \dontrun{veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"), baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1, sayisalFrekans = 5)}
-#' \dontrun{veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"), baslangicTarihi = "01-01-2010", bitisTarihi = "01-12-2020", gozlemParametresi = c("avg","max"), formulParametresi = 1, sayisalFrekans = 8)}
+#' \dontrun{
+#' veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020")
+#' veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020",
+#' bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1,
+#' sayisalFrekans = 5)
+#' veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"),
+#' baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg",
+#'  formulParametresi = 1, sayisalFrekans = 5)
+#' veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"),
+#' baslangicTarihi = "01-01-2010", bitisTarihi = "01-12-2020",
+#' gozlemParametresi = c("avg","max"), formulParametresi = 1, sayisalFrekans = 8)
+#' }
 #' @importFrom dplyr select select_if rename_with everything %>%
+#' @importFrom stats na.omit
 #' @importFrom jsonlite fromJSON
 veriler <- function(seriKodu, baslangicTarihi, bitisTarihi = "01-01-3000", gozlemParametresi = NULL, formulParametresi = NULL, sayisalFrekans = NULL){
 
@@ -242,61 +264,85 @@ veriler <- function(seriKodu, baslangicTarihi, bitisTarihi = "01-01-3000", gozle
 
   }
 
-  veri <<- fromJSON(url) %>%
+  veri <- fromJSON(url) %>%
     as.data.frame() %>%
     select(-totalCount,-`items.UNIXTIME`) %>%
     rename_with(~gsub("items.", "", .x), everything()) %>%
     select_if(function(x) any(sum(is.na(x)) != nrow(.))) %>%
     rename_with(~gsub("\\..*", "", .), everything())
+  return(veri)
 
   #Oh, you've found a bug in my code?
   #Please, tell me more -_-
-
 }
 
 #' @export
-#' @title Verileri Kaydetme
-#' @description Verilerin .csv, .xlsx veya .txt formatlarinda kaydedilmesini saglayan fonksiyondur.
-#' @param format Opsiyonel. Varsayilan formati .csv olarak girilmistir.
-#' @param dosyaYolu Opsiyonel. Degistirilmezse varsayilan dosya dizinini alir.
-#' Dosya dizinini ogrenmek icin getwd() fonksiyonu kullanilabilir.
+#' @title `veriler()` için wrapper
+#' @description Bir veya daha fazla veriyi indirip analize hazır hale getirir.
+#' `veriler()` fonksiyonu için bir wrapper görevi görür.
+#' @param series Seri/serilerin kodu.
+#' Birden fazla kod girmek için `c("", "", ...)` şeklinde yazılmalıdır.
+#' @param freq Opsiyonel.
+#' Detay icin `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodunda tek bir ortak değer olmalıdır.
+#' Girilmediği zaman sistem serilerin ortak frekansını alacaktır.
+#' @param obs Opsiyonel.
+#' Detay için `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodu istenirse gözlem parametreleri her biri için `c("", "", ...)` şeklinde tanıtılmalıdır.
+#' Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de aynı şekilde gelecektir.
+#' Girilmediği zaman sistem ilgili seri için orijinal gözlemin parametresini uygulayacaktır.
+#' @param formula Opsiyonel.
+#' Detay için `parametreler()` fonksiyonu çalıştırılabilir.
+#' Birden fazla seri kodu istenirse formül parametreleri her biri için `c("", "", ...)` seklinde tanıtılmalıdır.
+#' Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de ayni sekilde gelecektir.
+#' Girilmediği zaman sistem ilgili seri için düzey parametresini uygulayacaktır.
+#' @param start **gg-aa-yyyy** formatında girilmelidir.
+#' @param end Opsiyonel.
+#' **gg-aa-yyyy** formatında girilmelidir.
+#' Girilmezse son tarihi dikkate alacaktır.
 #' @examples
-#' \dontrun{aktar(format = ".xlsx", dosyaYolu = "C:/Users/...")}
-#' @importFrom openxlsx write.xlsx
-aktar <- function(format = NULL, dosyaYolu = NULL){
-
-  if(exists("veri")){
-
-    if(is.null(dosyaYolu)){
-      dosyaYolu <- getwd()
-    } else {
-      dosyaYolu <- dosyaYolu
-    }
-
-    if(is.null(format)){
-      write.csv(veri, paste0(dosyaYolu,"/veri_",format(Sys.time(),"%Y%m%d%H%M"),".csv"), row.names = F)
-    } else if(format == ".xlsx"){
-      write.xlsx(veri, paste0(dosyaYolu,"/veri_",format(Sys.time(),"%Y%m%d%H%M"),".xlsx"), row.names = F)
-    } else if(format == ".txt"){
-      write.table(veri, paste0(dosyaYolu,"/veri_",format(Sys.time(),"%Y%m%d%H%M"),".txt"), row.names = F, sep = "\t")
-    }
-
-  } else {
-
-    stop("'veri' isimli veri cercevesi bulunmamaktadir.")
-
+#' \dontrun{get_tcmb(seriler = c(), freq = 5, obs = "avg", formula = 0,
+#' start = "1-1-2009", end = "12-5-2022")}
+#' \dontrun{get_tcmb(seriler = c(), freq = 5, obs = "avg", formula = 0,
+#' start = "1-1-2009", end = "last")}
+#' @importFrom dplyr select mutate mutate_at vars everything  %>%
+#' @importFrom lubridate yq
+get_tcmb <- function(series,
+                     freq = NULL,
+                     obs = NULL,
+                     formula = NULL,
+                     start,
+                     end = "01-01-3000"){
+    #Get series
+    df <- veriler(seriKodu = series, baslangicTarihi = start, bitisTarihi = end, gozlemParametresi = obs, formulParametresi = formula, sayisalFrekans = freq)
+  # Convert Tarih to Date class
+  if(freq ==8){
+    dff <- df %>% mutate(Tarih = as.Date(Tarih, format = "%Y"))
+  } else if(freq == 6){
+    dff <- df %>% mutate(Tarih = yq(Tarih))
+  } else if(freq == 5){
+    dff <- df %>% mutate(Tarih = as.Date(paste(Tarih,1,sep="-"),"%Y-%m-%d"))
+  } else if(freq %in% c(1,2)){
+    dff <- df %>% mutate(Tarih = as.Date(Tarih,"%Y-%m-%d"))
+  } else if(!(freq %in% c(1,2,5,6,8))){
+    dff <- df
+    warning("freq value must be one of 1,2,5,6 and 8. For other values Tarih must be converted to Date or numeric class by hand")
   }
-
+  #Convert all other columns to numeric
+  dff <- dff %>%
+    mutate_at(vars(-("Tarih")),as.numeric)
+  return(dff)
 }
 
 #' @export
-#' @title Veri Gorsellestirme
-#' @description Tek bir seriyi basit bir duzeyde ve interaktif bir sekilde gorsellestirmeyi saglayan fonksiyondur.
-#' Gorsel uzerinde yakinlastirma, kaydetme gibi islemler yapilabilir.
-#' @param seriKodu Gorsellestirilmek istenen seri.
-#' NA (kayip) degerler kaldirilir.
-#' @param sayisalFrekans Gorsellestirilmek istenen serinin sayisal formatta frekansi.
-#' Veri ile ayni frekansta olmalidir.
+#' @title Veri Görselleştirme
+#' @description Tek bir seriyi basit bir düzeyde ve interaktif bir sekilde görselleştirmeyi sağlayan fonksiyondur.
+#' Görsel üzerinde yakınlaştırma, kaydetme gibi işlemler yapılabilir.
+#' @param veri Veri çerçevesi
+#' @param seriKodu Görselleştirilmek istenen seri.
+#' NA (kayıp) değerler kaldırılır.
+#' @param sayisalFrekans Görselleştirilmek istenen serinin sayısal formatta frekansı.
+#' Veri ile ayni frekansta olmalıdır.
 #' @examples
 #' \dontrun{gorsellestir(seriKodu = veri$TP_DK_USD_A_YTL, sayisalFrekans = 5)}
 #' @importFrom dplyr %>%
@@ -304,58 +350,49 @@ aktar <- function(format = NULL, dosyaYolu = NULL){
 #' @importFrom lubridate dmy ymd
 #' @importFrom ggplot2 ggplot aes geom_line theme_minimal scale_x_continuous
 #' @importFrom plotly ggplotly
-gorsellestir <- function(seriKodu, sayisalFrekans){
+gorsellestir <- function(veri, seriKodu, sayisalFrekans){
 
-  if(exists("veri")){
+  dt <- veri
 
-    dt <- veri
-
-    if(sayisalFrekans == 1 | sayisalFrekans == 2 | sayisalFrekans == 4){
-      dt$Tarih <- dmy(dt$Tarih)
-    } else if(sayisalFrekans == 5){
-      dt$Tarih <- ymd(paste(dt$Tarih,1,sep = "-"))
-    } else if(sayisalFrekans == 6){
-      dt$Tarih <- ifelse(grepl("Q1",dt$Tarih),
-                         ymd(paste(substr(dt$Tarih,1,4),3,1,sep = "-")),
-                         ifelse(grepl("Q2",dt$Tarih),
-                                ymd(paste(substr(dt$Tarih,1,4),6,1,sep = "-")),
-                                ifelse(grepl("Q3",dt$Tarih),
-                                       ymd(paste(substr(dt$Tarih,1,4),9,1,sep = "-")),
-                                       ymd(paste(substr(dt$Tarih,1,4),12,1,sep = "-")))))
-      dt$Tarih <- as.Date(dt$Tarih)
-    } else if(sayisalFrekans == 7){
-      dt$Tarih <- ifelse(grepl("S1", dt$Tarih),
-                         as.Date(paste(substr(dt$Tarih,1,4),6,1,sep = "-")),
-                         as.Date(paste(substr(dt$Tarih,1,4),12,1,sep = "-")))
-      dt$Tarih <- as.Date(dt$Tarih)
-    } else if(sayisalFrekans == 8){
-      dt$Tarih <- as.numeric(dt$Tarih)
-    } else if(sayisalFrekans == 3){
-      dt$Tarih <- dmy(dt$Tarih)
-      dt$YEARWEEK <- NULL
-    }
-
-    dt[[2]] <- as.numeric(dt[[2]])
-    names(dt)[2] <- "Seri"
-    dt <- dt %>% na.omit()
-
-    if(sayisalFrekans != 8){
-      g <- ggplot(data = dt, mapping = aes(x = Tarih, y = Seri)) +
-        geom_line() +
-        theme_minimal()
-    } else {
-      g <- ggplot(data = dt, mapping = aes(x = Tarih, y = Seri)) +
-        geom_line() +
-        theme_minimal() +
-        scale_x_continuous(breaks = c(seq(min(dt$Tarih),max(dt$Tarih),1)))
-    }
-
-    ggplotly(g)
-
-  } else {
-
-    stop("'veri' isimli veri cercevesi bulunmamaktadir.")
-
+  if(sayisalFrekans == 1 | sayisalFrekans == 2 | sayisalFrekans == 4){
+    dt$Tarih <- dmy(dt$Tarih)
+  } else if(sayisalFrekans == 5){
+    dt$Tarih <- ymd(paste(dt$Tarih,1,sep = "-"))
+  } else if(sayisalFrekans == 6){
+    dt$Tarih <- ifelse(grepl("Q1",dt$Tarih),
+                       ymd(paste(substr(dt$Tarih,1,4),3,1,sep = "-")),
+                       ifelse(grepl("Q2",dt$Tarih),
+                              ymd(paste(substr(dt$Tarih,1,4),6,1,sep = "-")),
+                              ifelse(grepl("Q3",dt$Tarih),
+                                     ymd(paste(substr(dt$Tarih,1,4),9,1,sep = "-")),
+                                     ymd(paste(substr(dt$Tarih,1,4),12,1,sep = "-")))))
+    dt$Tarih <- as.Date(dt$Tarih)
+  } else if(sayisalFrekans == 7){
+    dt$Tarih <- ifelse(grepl("S1", dt$Tarih),
+                       as.Date(paste(substr(dt$Tarih,1,4),6,1,sep = "-")),
+                       as.Date(paste(substr(dt$Tarih,1,4),12,1,sep = "-")))
+    dt$Tarih <- as.Date(dt$Tarih)
+  } else if(sayisalFrekans == 8){
+    dt$Tarih <- as.numeric(dt$Tarih)
+  } else if(sayisalFrekans == 3){
+    dt$Tarih <- dmy(dt$Tarih)
+    dt$YEARWEEK <- NULL
   }
 
+  dt[[2]] <- as.numeric(dt[[2]])
+  names(dt)[2] <- "Seri"
+  dt <- dt %>% na.omit()
+
+  if(sayisalFrekans != 8){
+    g <- ggplot(data = dt, mapping = aes(x = Tarih, y = Seri)) +
+      geom_line() +
+      theme_minimal()
+  } else {
+    g <- ggplot(data = dt, mapping = aes(x = Tarih, y = Seri)) +
+      geom_line() +
+      theme_minimal() +
+      scale_x_continuous(breaks = c(seq(min(dt$Tarih),max(dt$Tarih),1)))
+  }
+
+  ggplotly(g)
 }

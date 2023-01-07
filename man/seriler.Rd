@@ -14,5 +14,7 @@ ABD Dolari (Doviz Alis), ABD Dolari (Doviz Satis) gibi serileri icermektedir.
 Ilgilenilen seri/seriler secildikten sonra veriler() fonksiyonunda kullanilacaktir.
 }
 \examples{
-\dontrun{seriler(verigrupKodu = "bie_dkdovytl")}
+\dontrun{
+seriler(verigrupKodu = "bie_dkdovytl")
+}
 }

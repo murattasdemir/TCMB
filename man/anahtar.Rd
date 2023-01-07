@@ -2,18 +2,20 @@
 % Please edit documentation in R/funcs.R
 \name{anahtar}
 \alias{anahtar}
-\title{API Anahtarini Tanitma}
+\title{API Anahtarını Tanıtma}
 \usage{
 anahtar(api_anahtar)
 }
 \arguments{
-\item{api_anahtar}{API anahtari.}
+\item{api_anahtar}{API anahtarı.}
 }
 \description{
-TCMB/EVDS'den alinan API anahtarini tanimlamaya yarayan fonksiyondur.
-Anahtar olmadan herhangi bir veri cekme islemi gerceklestirilemez.
-Yardim icin yardim() fonksiyonu calistirilabilir.
+TCMB/EVDS'den alınan API anahtarını tanımlamaya yarayan fonksiyondur.
+Anahtar olmadan herhangi bir veri çekme işlemi gerçekleştirilemez.
+Yardim için \code{yardim()} fonksiyonu çalıştırılabilir.
 }
 \examples{
-\dontrun{anahtar(api_anahtar = "api_anahtar")}
+\dontrun{
+anahtar(api_anahtar = "api_anahtar")
+}
 }

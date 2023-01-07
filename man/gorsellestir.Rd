@@ -2,20 +2,22 @@
 % Please edit documentation in R/funcs.R
 \name{gorsellestir}
 \alias{gorsellestir}
-\title{Veri Gorsellestirme}
+\title{Veri Görselleştirme}
 \usage{
-gorsellestir(seriKodu, sayisalFrekans)
+gorsellestir(veri, seriKodu, sayisalFrekans)
 }
 \arguments{
-\item{seriKodu}{Gorsellestirilmek istenen seri.
-NA (kayip) degerler kaldirilir.}
+\item{veri}{Veri çerçevesi}
 
-\item{sayisalFrekans}{Gorsellestirilmek istenen serinin sayisal formatta frekansi.
-Veri ile ayni frekansta olmalidir.}
+\item{seriKodu}{Görselleştirilmek istenen seri.
+NA (kayıp) değerler kaldırılır.}
+
+\item{sayisalFrekans}{Görselleştirilmek istenen serinin sayısal formatta frekansı.
+Veri ile ayni frekansta olmalıdır.}
 }
 \description{
-Tek bir seriyi basit bir duzeyde ve interaktif bir sekilde gorsellestirmeyi saglayan fonksiyondur.
-Gorsel uzerinde yakinlastirma, kaydetme gibi islemler yapilabilir.
+Tek bir seriyi basit bir düzeyde ve interaktif bir sekilde görselleştirmeyi sağlayan fonksiyondur.
+Görsel üzerinde yakınlaştırma, kaydetme gibi işlemler yapılabilir.
 }
 \examples{
 \dontrun{gorsellestir(seriKodu = veri$TP_DK_USD_A_YTL, sayisalFrekans = 5)}

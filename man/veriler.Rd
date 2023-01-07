@@ -2,7 +2,7 @@
 % Please edit documentation in R/funcs.R
 \name{veriler}
 \alias{veriler}
-\title{Verileri Cekme}
+\title{Verileri Çekme}
 \usage{
 veriler(
   seriKodu,
@@ -15,37 +15,45 @@ veriler(
 }
 \arguments{
 \item{seriKodu}{Veri/verilerin seri kodu.
-Birden fazla kod girmek icin c("","",...) seklinde yazilmalidir.}
+Birden fazla kod girmek için \code{c("", "", ...)} seklinde yazılmalıdır.}
 
-\item{baslangicTarihi}{gg-aa-yyyy formatinda girilmelidir.}
+\item{baslangicTarihi}{\strong{gg-aa-yyyy} formatinda girilmelidir.}
 
 \item{bitisTarihi}{Opsiyonel.
-gg-aa-yyyy formatinda girilmelidir.
-Girilmezse son tarihi dikkate alacaktir.}
+\strong{gg-aa-yyyy} formatında girilmelidir.
+Girilmezse son tarihi dikkate alacaktır.}
 
 \item{gozlemParametresi}{Opsiyonel.
-Detay icin parametreler() fonksiyonu calistirilabilir.
-Birden fazla seri kodu istenirse gozlem parametreleri her biri icin c("","",...) seklinde tanitilmalidir.
-Birden fazla seri kodu girilmis ve tek bir parametre yazilmis ise digerleri de ayni sekilde gelecektir.
-Girilmedigi zaman sistem ilgili seri icin orijinal gozlemin parametresini uygulayacaktir.}
+Detay için \code{parametreler()} fonksiyonu çalıştırılabilir.
+Birden fazla seri kodu istenirse gözlem parametreleri her biri için \code{c("", "", ...)} seklinde tanıtılmalıdır.
+Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de ayni sekilde gelecektir.
+Girilmediği zaman sistem ilgili seri için orijinal gözlemin parametresini uygulayacaktır.}
 
 \item{formulParametresi}{Opsiyonel.
-Detay icin parametreler() fonksiyonu calistirilabilir.
-Birden fazla seri kodu istenirse formul parametreleri her biri icin c("","",...) seklinde tanitilmalidir.
-Birden fazla seri kodu girilmis ve tek bir parametre yazilmis ise digerleri de ayni sekilde gelecektir.
-Girilmedigi zaman sistem ilgili seri icin duzey parametresini uygulayacaktir.}
+Detay icin \code{parametreler()} fonksiyonu çalıştırılabilir.
+Birden fazla seri kodu istenirse formül parametreleri her biri için \code{c("", "", ...)} seklinde tanıtılmalıdır.
+Birden fazla seri kodu girilmiş ve tek bir parametre yazılmış ise diğerleri de aynı şekilde gelecektir.
+Girilmediği zaman sistem ilgili seri için düzey parametresini uygulayacaktır.}
 
 \item{sayisalFrekans}{Opsiyonel.
-Detay icin parametreler() fonksiyonu calistirilabilir.
-Birden fazla seri kodunda tek bir ortak deger olmalidir.
-Girilmedigi zaman sistem serilerin ortak frekansini alacaktir.}
+Detay için \code{parametreler()} fonksiyonu çalıştırılabilir.
+Birden fazla seri kodunda tek bir ortak değer olmalıdır.
+Girilmediği zaman sistem serilerin ortak frekansını alacaktır.}
 }
 \description{
-Istenen verinin/verilerin seri kodunun/kodlarinin tanimlanacagi fonksiyondur.
+İstenen verinin/verilerin seri kodunun/kodlarının tanımlanacağı fonksiyondur.
 }
 \examples{
-\dontrun{veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020")}
-\dontrun{veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1, sayisalFrekans = 5)}
-\dontrun{veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"), baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1, sayisalFrekans = 5)}
-\dontrun{veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"), baslangicTarihi = "01-01-2010", bitisTarihi = "01-12-2020", gozlemParametresi = c("avg","max"), formulParametresi = 1, sayisalFrekans = 8)}
+\dontrun{
+veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020")
+veriler(seriKodu = "TP.DK.USD.A.YTL", baslangicTarihi = "01-01-2020",
+bitisTarihi = "01-03-2021", gozlemParametresi = "avg", formulParametresi = 1,
+sayisalFrekans = 5)
+veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"),
+baslangicTarihi = "01-01-2020", bitisTarihi = "01-03-2021", gozlemParametresi = "avg",
+ formulParametresi = 1, sayisalFrekans = 5)
+veriler(seriKodu = c("TP.DK.USD.A.YTL","TP.DK.USD.S.YTL"),
+baslangicTarihi = "01-01-2010", bitisTarihi = "01-12-2020",
+gozlemParametresi = c("avg","max"), formulParametresi = 1, sayisalFrekans = 8)
+}
 }

@@ -1,25 +1,24 @@
 Package: TCMB
 Title: TCMB/EVDS Veri Cekme
-Version: 0.0.0.9000
+Version: 0.0.1.0
 Authors@R: 
-    person(given = "Ahmet",
-           family = "Akgul",
+    person(given = "Murat",
+           family = "Taşdemir",
            role = c("aut", "cre"),
-           email = "rpydaneogrendim@gmail.com")
-Description: TCMB/EVDS sisteminden verileri ceker, kaydeder ve basit bir duzeyde gorsellestirme yapar.
+           email = "tasdemir.phd@gmail.com")
+Description: TCMB/EVDS sisteminden verileri çeker ve basit bir düzeyde görsellestirme yapar. Ahmet Akgül tarafından yazılan orjinal kodun değiştirilmiş halidir.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Imports: 
     jsonlite,
     dplyr,
     lubridate,
-    openxlsx,
     ggplot2,
     plotly,
     magrittr,
     zoo
-URL: https://github.com/rpydaneogrendim/TCMB
-BugReports: https://github.com/rpydaneogrendim/TCMB/issues
+URL: https://github.com/murattasdemir/TCMB
+BugReports: https://github.com/murattasdemir/TCMB/issues

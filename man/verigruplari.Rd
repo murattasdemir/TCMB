@@ -2,21 +2,23 @@
 % Please edit documentation in R/funcs.R
 \name{verigruplari}
 \alias{verigruplari}
-\title{Veri Gruplarini Tanima}
+\title{Veri Gruplarını Tanıma}
 \usage{
 verigruplari(kategoriKodu = NULL, hepsi = FALSE)
 }
 \arguments{
-\item{kategoriKodu}{Istenen kategorinin/kategorilerin kodu. Deger girilecekse hepsi parametresi FALSE birakilmalidir. Birden fazla secilmek istenirse c("","",...) seklinde girilmelidir.}
+\item{kategoriKodu}{İstenen kategorinin/kategorilerin kodu. Değer girilecekse hepsi parametresi FALSE bırakılmalıdır. Birden fazla seçilmek istenirse \code{c("", "", ...)} şeklinde girilmelidir.}
 
-\item{hepsi}{Varsayilani FALSE'tur. Eger tum veri gruplari istenirse TRUE yapilmalidir. Bu durumda kategoriKodu parametresine deger girilmemelidir.}
+\item{hepsi}{Varsayılanı FALSE'tur. Eğer tüm veri grupları istenirse TRUE yapılmalıdır. Bu durumda kategoriKodu parametresine değer girilmemelidir.}
 }
 \description{
-Doviz Kurlari, Efektif Kurlar gibi veri gruplarini icermektedir.
-Ilgilenilen veri grubu/gruplari secildikten sonra seriler() fonksiyonunda kullanilacaktir.
+Döviz Kurları, Dış Ticaret gibi veri gruplarını içermektedir.
+İlgilenilen veri grubu/grupları seçildikten sonra \code{seriler()} fonksiyonunda kullanılacaktır.
 }
 \examples{
-\dontrun{verigruplari(kategoriKodu = 2)}
-\dontrun{verigruplari(kategoriKodu = c(2,14))}
-\dontrun{verigruplari(hepsi = TRUE)}
+\dontrun{
+verigruplari(kategoriKodu = 2)
+verigruplari(kategoriKodu = c(2,14))
+verigruplari(hepsi = TRUE)
+}
 }

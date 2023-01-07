@@ -2,12 +2,12 @@
 % Please edit documentation in R/funcs.R
 \name{yardim}
 \alias{yardim}
-\title{API Anahtarinin Nasil Alinacagi Konusunda Yardim}
+\title{API Anahtarının Nasıl Alınacağı Konusunda Yardım}
 \usage{
 yardim()
 }
 \description{
-Adim adim API anahtarinin nasil alinacagini gosteren fonksiyondur.
-Aciklamada bulunan url:
+Adım adım API anahtarının nasıl alınacağını gösteren fonksiyondur.
+Açıklamada bulunan url:
 \url{https://evds2.tcmb.gov.tr/index.php?/evds/login}
 }
